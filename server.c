@@ -1,54 +1,54 @@
-# include  < stdio.h >
-# include  < string.h > 	// strlen
-# include  < sys / socket.h >
-# include  < arpa / inet.h > 	// inet_addr
-# include  < unistd.h > 	// gravação
+#include <stdio.h>
+#include <string.h>	//strlen
+#include <sys/socket.h>
+#include <arpa/inet.h>	//inet_addr
+#include <unistd.h>	//write
 
-int  main ( int argc, char * argv [])
+int main(int argc , char *argv[])
 {
-	int socket_desc, new_socket, c;
-	servidor sockaddr_in struct , cliente;
-    char * mensagem;
+	int socket_desc , new_socket , c;
+	struct sockaddr_in server , client;
+    char *message;
 	
-	// Criar socket
-	socket_desc = socket (AF_INET, SOCK_STREAM, 0 );
-	if (socket_desc == - 1 )
+	//Create socket
+	socket_desc = socket(AF_INET , SOCK_STREAM , 0);
+	if (socket_desc == -1)
 	{
-		printf ( " Não foi possível criar o soquete " );
+		printf("Could not create socket");
 	}
 	
-	// Prepara a estrutura sockaddr_in
-	servidor. família sin_ = AF_INET;
-	servidor. sin_addr . s_addr = INADDR_ANY;
-	servidor. sin_port = htons ( 8888 );
+	//Prepare the sockaddr_in structure
+	server.sin_family = AF_INET;
+	server.sin_addr.s_addr = INADDR_ANY;
+	server.sin_port = htons( 8888 );
 	
-	// Vincular
-	if ( bind (socket_desc, ( struct sockaddr *) & server, sizeof (server)) < 0 )
+	//Bind
+	if( bind(socket_desc,(struct sockaddr *)&server , sizeof(server)) < 0)
 	{
-		puts ( " falha na ligação " );
+		puts("bind failed");
 	}
-	puts ( " ligação concluída " );
+	puts("bind done");
 	
-	// Listen
-	ouvir (socket_desc, 3 );
+	//Listen
+	listen(socket_desc , 3);
 	
-	// Aceita e conexão de entrada
-	puts ( " Aguardando conexões de entrada ... " );
-	c = sizeof ( struct sockaddr_in);
-	while ((new_socket = accept (socket_desc, ( struct sockaddr *) e cliente, ( socklen_t *) & c))))
+	//Accept and incoming connection
+	puts("Waiting for incoming connections...");
+	c = sizeof(struct sockaddr_in);
+	while( (new_socket = accept(socket_desc, (struct sockaddr *)&client, (socklen_t*)&c)) )
 	{
-		puts ( " Conexão aceita " );
+		puts("Connection accepted");
 		
-		// Responder ao cliente
-		message = " Olá Cliente, recebi sua conexão. Mas tenho que ir agora, tchau \ n " ;
-		write (new_socket, message, strlen (message));
+		//Reply to the client
+		message = "Hello Client , I have received your connection. But I have to go now, bye\n";
+		write(new_socket , message , strlen(message));
 	}
 	
-	if (new_socket < 0 )
+	if (new_socket<0)
 	{
-		perror ( " aceitação falhou " );
-		retornar  1 ;
+		perror("accept failed");
+		return 1;
 	}
 
-	retornar  0 ;
+	return 0;
 }
