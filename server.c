@@ -56,9 +56,11 @@ int main(int argc, char *argv[])
             }
             printf("Resposta recebida.\n");
             printf("%s\n", client_reply);
+            
+            
 
             /* resposta ao cliente */
-            message = "Olá Cliente! Recebi sua conexão, mas preciso ir agora! Tchau!";
+            message = "Olá Cliente! Recebi sua conexão.";
             write(new_socket, message, strlen(message));
         } while(strcmp(client_reply, "exit") != 0);
     }
