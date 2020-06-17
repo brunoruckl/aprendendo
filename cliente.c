@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
         bzero(message, sizeof(message));
         
         /* envia dados */
-        printf("Digite uma mensagem: ");
+        printf("escreva uma mensagem: ");
 
         int ch, n = 0;
         /* lÃª a entrada de dados do usuÃ¡rio via getchar */
